@@ -15,7 +15,7 @@ Usage:
                 Available: content, api, params, dns, fuzz, xss, sqli, lfi
 
     ffuf  - keyword for showing ffuf command exmaples. 
-                Availabe: discovery
+                Availabe: discovery, vhost, paramMining
 
     help - show this message.        
 '
@@ -59,7 +59,7 @@ seclists_lfi="$home_recon/wrds/SecLists/Fuzzing/LFI/"
 
 
 
-# web-content wordlists keyword
+# wordlists keyword
 if [[ $1 == "words" ]]; then
 
     if [[ $2 == "content" ]]; then
@@ -235,17 +235,25 @@ if [[ $1 == "words" ]]; then
 fi
 
 
-# ffuf
+# ffuf keyword
 if [[ $1 == "ffuf" ]]; then
 
     if [[ $2 == "discovery" ]]; then
-        echo -e '\033[1mFiles and Dirs Discovery example command\033[0m'
-        echo "ffuf -w ${seclists_web_content} -e .php,.html,.sql,.bak,.old,.txt,.zip -c -v -r -u /FUZZ"
+        echo -e '\033[1mFiles and Dirs Discovery Example Command\033[0m'
+        echo "ffuf -w ${seclists_web_content} -e .php,.html,.sql,.bak,.old,.txt,.zip -c -v -r -u http://ffuf.me/FUZZ"
 
     fi
 
- #   if [[ $2 == ]]; tnen
 
-  #  fi    
+    if [[ $2 == "vhost" ]]; then
+        echo -e '\033[1mVHost Discovery Example Command\033[0m'
+        echo "ffuf -w ${seclists_dns} -H "Host: FUZZ.ffuf.me" -u http://ffuf.me"
+
+    fi
+
+    
+    if [[ $2 == "paramMining" ]]; then
+        echo -e '\033[1mParameters Discovery Example Command \033[0m'
+        echo "ffuf -w ${seclists_params} -u http://ffuf.me/cd/param/data?FUZZ=1"    
     
 fi
